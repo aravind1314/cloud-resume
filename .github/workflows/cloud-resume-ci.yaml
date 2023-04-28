@@ -46,7 +46,7 @@ jobs:
       echo "::set-output name=instance_public_dns::$(terraform output ec2_public_ip)"
     working-directory: ./terraform
 
-  - run: echo EC2_PUBLIC_IP=${{ needs.set-dns.outputs.instance_public_dns }} >> $GITHUB_ENV
+  - run: echo SERVER_PUBLIC_IP=${{ needs.deploy-infra.outputs.SERVER_PUBLIC_DNS }} >> $GITHUB_ENV
 
   - name: Build & push Docker image
     uses: mr-smithers-excellent/docker-build-push@v6
@@ -70,21 +70,21 @@ jobs:
   #   scp -i $SSH_KEY docker-compose.yaml ubuntu@$PUBLIC_IP:/home/ubuntu
 
   - name: copy docker-compose via ssh key
-    uses: nogsantos/scp-deploy@master
+    uses: nogsantos/scp-action@master
     with:
-      src: ./docker-compose.yaml
-      host: ${{ env.EC2_PUBLIC_IP }}
-      remote: /home/ubuntu/
-      user: ubuntu
+      source: 'docker-compose.yaml'
+      host: ${{ env.SERVER_PUBLIC_IP }}
+      target: '/home/ubuntu'
+      username: ubuntu
       key: ${{ secrets.KEY }}
 
   - name: copy docker-compose via ssh key
-    uses: nogsantos/scp-deploy@master
+    uses: nogsantos/scp-action@master
     with:
-      src: ./script-cmnds.sh
-      host: ${{ env.EC2_PUBLIC_IP }}
-      remote: /home/ubuntu/
-      user: ubuntu
+      source: 'script-cmnds.sh'
+      host: ${{ env.SERVER_PUBLIC_IP }}
+      target: '/home/ubuntu'
+      username: ubuntu
       key: ${{ secrets.KEY }}
 
   - name: Deploy Docker Image to EC2
