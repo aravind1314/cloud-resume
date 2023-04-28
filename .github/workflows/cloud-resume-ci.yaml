@@ -72,27 +72,27 @@ jobs:
   - name: copy docker-compose via ssh key
     uses: appleboy/scp-action@master
     with:
-      source: 'docker-compose.yaml'
       host: ${{ env.SERVER_PUBLIC_IP }}
-      target: '/home/ubuntu'
       username: ubuntu
       key: ${{ secrets.KEY }}
+      source: "docker-compose.yaml"
+      target: "/home/ubuntu"
 
   - name: copy docker-compose via ssh key
     uses: appleboy/scp-action@master
     with:
-      source: 'script-cmnds.sh'
       host: ${{ env.SERVER_PUBLIC_IP }}
-      target: '/home/ubuntu'
       username: ubuntu
       key: ${{ secrets.KEY }}
+      source: "script-cmnds.sh"
+      target: "/home/ubuntu"
 
   - name: Deploy Docker Image to EC2
     env:
      IMAGE_TAG: ${{ github.sha }}
     uses: appleboy/ssh-action@master
     with:
-      host: ${{ env.EC2_PUBLIC_IP }}
+      host: ${{ env.SERVER_PUBLIC_IP }}
       username: ubuntu
       key: ${{ secrets.KEY }}
       script: |
