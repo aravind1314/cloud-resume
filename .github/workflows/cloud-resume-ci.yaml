@@ -70,7 +70,7 @@ jobs:
   #   scp -i $SSH_KEY docker-compose.yaml ubuntu@$PUBLIC_IP:/home/ubuntu
 
   - name: copy docker-compose via ssh key
-    uses: nogsantos/scp-action@master
+    uses: appleboy/scp-action@master
     with:
       source: 'docker-compose.yaml'
       host: ${{ env.SERVER_PUBLIC_IP }}
@@ -79,7 +79,7 @@ jobs:
       key: ${{ secrets.KEY }}
 
   - name: copy docker-compose via ssh key
-    uses: nogsantos/scp-action@master
+    uses: appleboy/scp-action@master
     with:
       source: 'script-cmnds.sh'
       host: ${{ env.SERVER_PUBLIC_IP }}
