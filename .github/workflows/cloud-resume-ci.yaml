@@ -46,7 +46,7 @@ jobs:
       echo "::set-output name=instance_public_dns::$(terraform output ec2_public_ip)"
     working-directory: ./terraform
 
-  - run: echo SERVER_PUBLIC_IP=${{ needs.deploy-infra.outputs.SERVER_PUBLIC_DNS }} >> $GITHUB_ENV
+  - run: echo SERVER_PUBLIC_IP=${{ steps.set-dns.outputs.instance_public_dns }} >> $GITHUB_ENV
 
   - name: Build & push Docker image
     uses: mr-smithers-excellent/docker-build-push@v6
