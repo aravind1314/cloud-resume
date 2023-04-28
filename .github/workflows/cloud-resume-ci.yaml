@@ -46,7 +46,7 @@ jobs:
      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     run: |
      echo EC2_PUBLIC_IP=$(terraform output ec2_public_ip) >> $GITHUB_ENV 
-     echo ${{env.EC2_PUBLIC_IP}}
+     echo ${{ env.EC2_PUBLIC_IP }}
     working-directory: ./terraform
 
   - name: Build & push Docker image
@@ -63,7 +63,7 @@ jobs:
 
 
   - name: copy script via ssh key
-    uses: appleboy/scp-action@v0.1.4
+    uses: appleboy/scp-action@master
     with:
       host: ${{ env.EC2_PUBLIC_IP }}
       username: ubuntu
@@ -73,7 +73,7 @@ jobs:
       target: "/home/ubuntu"
 
   - name: copy script via ssh key
-    uses: appleboy/scp-action@v0.1.4
+    uses: appleboy/scp-action@master
     with:
       host: ${{ env.EC2_PUBLIC_IP }}
       username: ubuntu
@@ -85,7 +85,7 @@ jobs:
   - name: Deploy Docker Image to EC2
     env:
      IMAGE_TAG: ${{ github.sha }}
-    uses: appleboy/ssh-action@v0.1.10
+    uses: appleboy/ssh-action@master
     with:
       host: ${{ env.EC2_PUBLIC_IP }}
       username: ubuntu
