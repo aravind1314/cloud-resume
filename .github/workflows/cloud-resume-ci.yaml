@@ -16,29 +16,34 @@ jobs:
   - name: git-checkout
     uses: actions/checkout@v3
 
-  
-  - name: Configure AWS Credentials Action For GitHub Actions
-    uses: aws-actions/configure-aws-credentials@v1
-    with:
-      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
   - name: Setup Terraform
+    env:
+     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     uses: hashicorp/setup-terraform@v2
     with:
       terraform_wrapper: false
 
   - name: Terraform Init
+    env:
+     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     id: init
     run: terraform init
     working-directory: ./terraform
 
   - name: Terraform apply
+    env:
+     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     id: apply
     run: terraform apply -auto-approve
     working-directory: ./terraform
   
   - name: Set EC2 public IP as env variable
+    env:
+     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     run: echo "::set-env name=EC2_PUBLIC_IP::$(terraform output ec2_public_ip)"
     working-directory: ./terraform
 
