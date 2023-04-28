@@ -70,7 +70,7 @@ jobs:
       port: 22
       key: ${{ secrets.KEY }}
       source: "./docker-compose.yaml"
-      target: /home/ubuntu
+      target: "/home/ubuntu"
 
   - name: copy script via ssh key
     uses: appleboy/scp-action@v0.1.4
@@ -80,7 +80,7 @@ jobs:
       port: 22
       key: ${{ secrets.KEY }}
       source: "./script-cmnds.sh"
-      target: /home/ubuntu
+      target: "/home/ubuntu"
 
   - name: Deploy Docker Image to EC2
     env:
