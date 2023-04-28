@@ -88,9 +88,8 @@ jobs:
       key: ${{ secrets.KEY }}
       script: |
        sudo chmod +x script-cmnds.sh
-       export URL="tma1314/docker-hub-repo"
-       export IMAGE=$IMAGE_TAG
-       export docker_user=${{ secrets.DOCKER_USERNAME }}
-       export docker_pswd=${{ secrets.DOCKER_PASSWORD }}
-       sudo bash script-cmnds.sh 
+
+       docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+       sudo bash script-cmnds.sh tma1314/docker-hub-repo $IMAGE_TAG
 
