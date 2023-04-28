@@ -1,7 +1,7 @@
 version: '3'
 services:
  cloud-resume:
-  image: $URL:$IMAGE
+  image: tma1314/docker-hub-repo:latest
   ports:
    - 3000:3000
  #mongodb:
