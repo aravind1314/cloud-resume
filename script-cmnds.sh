@@ -5,7 +5,7 @@ export IMAGE=$2
 export docker_user=$3
 export docker_pswd=$4
 
-echo $docker_pswd | docker login -u $docker_user --password-stdin
+docker login -u $docker_user -p $docker_pswd
 
 docker-compose -f docker-compose.yaml up --detach
 
