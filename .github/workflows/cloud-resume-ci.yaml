@@ -58,6 +58,9 @@ jobs:
       username: ${{ secrets.DOCKER_USERNAME }}
       password: ${{ secrets.DOCKER_PASSWORD }}
 
+  - name: wait for server
+    run: sleep 120
+
 
   - name: copy script via ssh key
     uses: appleboy/scp-action@v0.1.4
