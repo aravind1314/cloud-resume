@@ -91,5 +91,9 @@ jobs:
 
        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-       sudo bash script-cmnds.sh tma1314/docker-hub-repo $IMAGE_TAG
+       export URL="tma1314/docker-hub-repo"
+
+       export IMAGE=$IMAGE_TAG
+
+       sudo bash script-cmnds.sh
 
