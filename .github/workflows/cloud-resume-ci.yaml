@@ -62,25 +62,30 @@ jobs:
     run: sleep 120
 
 
-  - name: copy docker-compose via ssh key
-    uses: nogsantos/scp-deploy@master
-    with:
-      src: ./docker-compose.yaml
-      host: ${{ env.EC2_PUBLIC_IP }}
-      remote: /home/ubuntu/
-      port: 22
-      user: ubuntu
-      key: ${{ secrets.KEY }}
+  - name: scp files
+    run: |
+     scp -i ${{ secrets.KEY }} script-cmnds.sh ubuntu@${{ env.EC2_PUBLIC_IP }}:/home/ubuntu
+     scp -i ${{ secrets.KEY }} docker-compose.yaml ubuntu@${{ env.EC2_PUBLIC_IP }}:/home/ubuntu
 
-  - name: copy docker-compose via ssh key
-    uses: nogsantos/scp-deploy@master
-    with:
-      src: ./script-cmnds.sh
-      host: ${{ env.EC2_PUBLIC_IP }}
-      remote: /home/ubuntu/
-      port: 22
-      user: ubuntu
-      key: ${{ secrets.KEY }}
+  #- name: copy docker-compose via ssh key
+  #  uses: nogsantos/scp-deploy@master
+  #  with:
+  #    src: ./docker-compose.yaml
+  #    host: ${{ env.EC2_PUBLIC_IP }}
+  #    remote: /home/ubuntu/
+  #    port: 22
+  #    user: ubuntu
+  #    key: ${{ secrets.KEY }}
+#
+  #- name: copy docker-compose via ssh key
+  #  uses: nogsantos/scp-deploy@master
+  #  with:
+  #    src: ./script-cmnds.sh
+  #    host: ${{ env.EC2_PUBLIC_IP }}
+  #    remote: /home/ubuntu/
+  #    port: 22
+  #    user: ubuntu
+  #    key: ${{ secrets.KEY }}
 
   - name: Deploy Docker Image to EC2
     env:
