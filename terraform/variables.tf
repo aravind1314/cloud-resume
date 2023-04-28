@@ -7,7 +7,7 @@ variable "subnet_cidr_block" {
 }
 
 variable "env_prefix" {
-    default = "dev"
+    default = "cloud-resume"
 }
 
 variable "instance_type" {
