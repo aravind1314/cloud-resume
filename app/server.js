@@ -8,7 +8,13 @@ const app = express();
 
 app.use(bodyParser.urlencoded({extended:true}));
 
-app.use(express.static(__dirname + '/images/'));
+app.use(express.static(__dirname + "/public", {
+  index: false, 
+  immutable: true, 
+  cacheControl: true,
+  maxAge: "30d"
+}));
+
 
 app.get("/", function(req, res) {
 
