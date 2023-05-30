@@ -46,10 +46,10 @@ jobs:
      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     id: set-ip
     run: |-
-      echo "::set-output name=instance_public_dns::$(terraform output ec2_public_ip)"
+      echo "::set-output name=instance_public_eip::$(terraform output eip_public_ip)"
     working-directory: ./terraform
 
-  - run: echo SERVER_PUBLIC_IP=${{ steps.set-ip.outputs.instance_public_dns }} >> $GITHUB_ENV
+  - run: echo SERVER_PUBLIC_EIP=${{ steps.set-ip.outputs.instance_public_eip }} >> $GITHUB_ENV
 
   - name: Build & push Docker image
     uses: mr-smithers-excellent/docker-build-push@v6
@@ -63,7 +63,7 @@ jobs:
   - name: Remove existing files in ec2
     uses: appleboy/ssh-action@master
     with:
-      host: ${{ env.SERVER_PUBLIC_IP }}
+      host: ${{ env.SERVER_PUBLIC_EIP }}
       username: ubuntu
       key: ${{ secrets.KEY }}
       script: |
@@ -77,7 +77,7 @@ jobs:
   - name: copy docker-compose via ssh key
     uses: appleboy/scp-action@master
     with:
-      host: ${{ env.SERVER_PUBLIC_IP }}
+      host: ${{ env.SERVER_PUBLIC_EIP }}
       username: ubuntu
       key: ${{ secrets.KEY }}
       source: "docker-compose.yaml"
@@ -86,7 +86,7 @@ jobs:
   - name: copy script-cmnds via ssh key
     uses: appleboy/scp-action@master
     with:
-      host: ${{ env.SERVER_PUBLIC_IP }}
+      host: ${{ env.SERVER_PUBLIC_EIP }}
       username: ubuntu
       key: ${{ secrets.KEY }}
       source: "script-cmnds.sh"
@@ -97,7 +97,7 @@ jobs:
      IMAGE_TAG: ${{ github.sha }}
     uses: appleboy/ssh-action@master
     with:
-      host: ${{ env.SERVER_PUBLIC_IP }}
+      host: ${{ env.SERVER_PUBLIC_EIP }}
       username: ubuntu
       key: ${{ secrets.KEY }}
       script: |

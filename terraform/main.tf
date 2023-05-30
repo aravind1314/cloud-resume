@@ -93,6 +93,11 @@ data "aws_ami" "latest_ami" {
   }
 }
 
+resource "aws_eip" "my_eip" {
+  vpc = true
+  instance = aws_instance.my_server.id
+}
+
 resource "aws_instance" "my_server" {
   ami = data.aws_ami.latest_ami.id
   instance_type = var.instance_type
@@ -109,6 +114,6 @@ resource "aws_instance" "my_server" {
   }
 }
 
-output "ec2_public_ip" {
-    value = aws_instance.my_server.public_ip
+output "eip_public_ip" {
+    value = aws_eip.my_eip.public_ip
 }
