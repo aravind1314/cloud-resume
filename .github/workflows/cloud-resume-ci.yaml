@@ -67,7 +67,7 @@ jobs:
       host: ${{ env.SERVER_PUBLIC_EIP }}
       username: ubuntu
       key: ${{ secrets.KEY }}
-    run: |
+    script: |
       if [[ -f docker-compose.yaml ]]; then
         echo "::set-output name=file_exists::true"
       else
