@@ -60,8 +60,18 @@ jobs:
       username: ${{ secrets.DOCKER_USERNAME }}
       password: ${{ secrets.DOCKER_PASSWORD }}
 
+  - name: Check if file exists
+  id: check_file_exists
+  run: |
+    if [[ -f docker-compose.yaml ]]; then
+      echo "::set-output name=file_exists::true"
+    else
+      echo "::set-output name=file_exists::false"
+    fi
+
   - name: Remove existing files in ec2
     uses: appleboy/ssh-action@master
+    if: ${{ steps.check_file_exists.outputs.file_exists == 'true' }}
     with:
       host: ${{ env.SERVER_PUBLIC_EIP }}
       username: ubuntu
