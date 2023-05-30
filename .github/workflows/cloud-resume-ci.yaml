@@ -62,6 +62,11 @@ jobs:
 
   - name: Check if file exists
     id: check_file_exists
+    uses: appleboy/ssh-action@master
+    with:
+      host: ${{ env.SERVER_PUBLIC_EIP }}
+      username: ubuntu
+      key: ${{ secrets.KEY }}
     run: |
       if [[ -f docker-compose.yaml ]]; then
         echo "::set-output name=file_exists::true"
