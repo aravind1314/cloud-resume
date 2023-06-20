@@ -94,7 +94,7 @@ data "aws_ami" "latest_ami" {
 }
 
 resource "aws_eip" "my_eip" {
-  vpc = true
+  domain = "vpc"
   instance = aws_instance.my_server.id
 }
 
