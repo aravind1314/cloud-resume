@@ -75,18 +75,18 @@ jobs:
         fi
 
   - name: Remove existing files in ec2
-    if: ${{ steps.check_file_exists.outputs.file_exists }}
-    uses: appleboy/ssh-action@master
-    with:
-      host: ${{ env.SERVER_PUBLIC_EIP }}
-      username: ubuntu
-      key: ${{ secrets.KEY }}
-      script: |
-       sudo docker-compose -f docker-compose.yaml down
-       sudo rm docker-compose.yaml
-       sudo rm script-cmnds.sh
-       sudo docker rm -vf $(docker ps -a -q)
-       sudo docker rmi -f $(docker images -a -q)
+    if: steps.check_file_exists.outputs.file_exists; then
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ env.SERVER_PUBLIC_EIP }}
+        username: ubuntu
+        key: ${{ secrets.KEY }}
+        script: |
+         sudo docker-compose -f docker-compose.yaml down
+         sudo rm docker-compose.yaml
+         sudo rm script-cmnds.sh
+         sudo docker rm -vf $(docker ps -a -q)
+         sudo docker rmi -f $(docker images -a -q)
 
 
   - name: copy docker-compose via ssh key
