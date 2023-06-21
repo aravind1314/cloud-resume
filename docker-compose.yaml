@@ -3,7 +3,7 @@ services:
  cloud-resume:
   image: tma1314/docker-hub-repo:latest
   ports:
-   - 80:3000
+   - 3000:3000
  #mongodb:
  # image: mongo
  # ports:
