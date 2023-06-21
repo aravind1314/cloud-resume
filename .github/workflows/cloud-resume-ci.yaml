@@ -75,7 +75,7 @@ jobs:
         fi
 
   - name: Remove existing files in ec2
-    if: steps.check_file_exists.outputs.file_exists; then
+    if: steps.check_file_exists.outputs.file_exists ; then
     uses: appleboy/ssh-action@master
     with:
       host: ${{ env.SERVER_PUBLIC_EIP }}
