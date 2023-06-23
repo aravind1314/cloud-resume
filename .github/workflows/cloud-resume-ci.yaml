@@ -87,9 +87,9 @@ jobs:
        sudo rm script-cmnds.sh
        sudo docker rm -vf $(docker ps -a -q)
        sudo docker rmi -f $(docker images -a -q)
-       
 
- deploy
+
+ deploy:
   needs: build
   runs-on: ubuntu-latest
    
