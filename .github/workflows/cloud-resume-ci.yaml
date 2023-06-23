@@ -99,6 +99,7 @@ jobs:
       target: "/home/ubuntu"
 
   - name: copy script-cmnds via ssh key
+    if: always()
     uses: appleboy/scp-action@master
     with:
       host: ${{ env.SERVER_PUBLIC_EIP }}
@@ -108,6 +109,7 @@ jobs:
       target: "/home/ubuntu"
 
   - name: Deploy Docker Image to EC2
+    if: always()
     env:
      IMAGE_TAG: ${{ github.sha }}
     uses: appleboy/ssh-action@master
