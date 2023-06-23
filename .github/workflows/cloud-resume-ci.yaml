@@ -90,6 +90,7 @@ jobs:
 
  build2:
   needs: build
+  if: always()
   runs-on: ubuntu-latest
 
   steps:
