@@ -81,6 +81,7 @@ jobs:
       username: ubuntu
       key: ${{ secrets.KEY }}
       if: ${{ steps.check_file_exists.outputs.file_exists == 'true' }}
+      continue-on-error: true
       script: |
        sudo docker-compose -f docker-compose.yaml down
        sudo rm docker-compose.yaml
