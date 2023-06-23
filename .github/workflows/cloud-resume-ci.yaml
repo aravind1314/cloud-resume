@@ -81,15 +81,18 @@ jobs:
       username: ubuntu
       key: ${{ secrets.KEY }}
       if: ${{ steps.check_file_exists.outputs.file_exists == 'true' }}
-      continue-on-error: true
       script: |
        sudo docker-compose -f docker-compose.yaml down
        sudo rm docker-compose.yaml
        sudo rm script-cmnds.sh
        sudo docker rm -vf $(docker ps -a -q)
        sudo docker rmi -f $(docker images -a -q)
+       
 
-
+ deploy
+  needs: build
+  runs-on: ubuntu-latest
+   
   - name: copy docker-compose via ssh key
     uses: appleboy/scp-action@master
     with:
