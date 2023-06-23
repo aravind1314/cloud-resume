@@ -87,15 +87,9 @@ jobs:
        sudo rm script-cmnds.sh
        sudo docker rm -vf $(docker ps -a -q)
        sudo docker rmi -f $(docker images -a -q)
-
- build2:
-  needs: build
-  if: always()
-  runs-on: ubuntu-latest
-
-  steps:
    
   - name: copy docker-compose via ssh key
+    if: always()
     uses: appleboy/scp-action@master
     with:
       host: ${{ env.SERVER_PUBLIC_EIP }}
