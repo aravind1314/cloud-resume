@@ -91,6 +91,8 @@ jobs:
  build2:
   needs: build
   runs-on: ubuntu-latest
+
+  steps:
    
   - name: copy docker-compose via ssh key
     uses: appleboy/scp-action@master
