@@ -5,7 +5,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "cloud-resume-terraform-state"
+    bucket = "cloud-resume-terraform-state-bucket"
     key    = "terraform.tfstate"
     region = "ap-south-1"
   }
@@ -104,7 +104,7 @@ resource "aws_instance" "my_server" {
   subnet_id = aws_subnet.my_subnet.id
   vpc_security_group_ids = [aws_security_group.my_sg.id]
   availability_zone = var.avail_zone
-  key_name = "sony-aws-ssh-key"
+  key_name = "new-aws-key-pair"
   associate_public_ip_address = true
 
   user_data = file("script.sh")
